@@ -3,24 +3,21 @@ using Xunit;
 
 namespace Gradebook.Tests
 {
-    public class BookTests
+    public class TypeTests
     {
         [Fact]
-        public void Test1()
+        public void GetBookReturnsDifferentObjects()
         {
-            // arrange
-            var book = new Book("");
-            book.AddGrade(89.1);
-            book.AddGrade(90.5);
-            book.AddGrade(77.3);
+            var book1 = GetBook("Book 1");
+            var book2 = GetBook("Book 2");
 
-            // act
-            var result = book.GetStatistics();
-
-            // assert
-            Assert.Equal(85.6, result.Avarage, 1);
-            Assert.Equal(90.5, result.High, 1);
-            Assert.Equal(77.3, result.Low, 1);
+            Assert.Equal("Book 1", book1.Name);
+            Assert.Equal("Book 2", book2.Name);
         }
-    }
+
+        Book GetBook(string name)
+        {
+            return new Book(name);
+        }
+  }
 }
