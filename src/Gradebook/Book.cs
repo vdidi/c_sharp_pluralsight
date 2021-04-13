@@ -2,7 +2,16 @@ using System;
 using System.Collections.Generic;
 
 namespace Gradebook {
-  public class Book {
+
+  public class NamedObject {
+      public string Name
+      {
+        get;
+        set;
+      }
+  }
+
+  public class Book : NamedObject {
 
     public Book(string name) {
       grades = new List<double>();
