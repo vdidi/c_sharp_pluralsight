@@ -15,11 +15,23 @@ namespace Gradebook {
     }
   }
 
-  public abstract class Book : NamedObject
+  public interface IBook {
+    void AddGrade(double grade);
+    Statistics GetStatistics();
+    string Name { get; }
+    //event GradeAddedDelegate GradeAdded;
+  }
+
+  public abstract class Book : NamedObject, IBook
   {
     protected Book(string name) : base(name) {}
 
     public abstract void AddGrade(double grade);
+
+    public virtual Statistics GetStatistics()
+    {
+      throw new NotImplementedException();
+    }
   }
 
   public class InMemoryBook : Book {
@@ -33,7 +45,7 @@ namespace Gradebook {
       grades.Add(grade);
     }
 
-    public Statistics GetStatistics() {
+    public override Statistics GetStatistics() {
       var result = new Statistics();
       result.Avarage = 0.0;
       result.High = double.MinValue;
