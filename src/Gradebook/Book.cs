@@ -48,7 +48,19 @@ namespace Gradebook {
 
     public override Statistics GetStatistics()
     {
-      throw new NotImplementedException();
+      var result = new Statistics();
+      using(var reader = File.OpenText($"{Name}.txt"))
+      {
+        var line = reader.ReadLine();
+        while(line != null)
+        {
+          var number = double.Parse(line);
+          result.Add(number);
+          line = reader.ReadLine();
+        }
+      }
+
+      return result;
     }
   }
 
@@ -65,16 +77,10 @@ namespace Gradebook {
 
     public override Statistics GetStatistics() {
       var result = new Statistics();
-      result.Avarage = 0.0;
-      result.High = double.MinValue;
-      result.Low = double.MaxValue;
 
-      foreach(var grade in grades) {
-          result.Low = Math.Min(grade, result.Low);
-          result.High = Math.Max(grade, result.High);
-          result.Avarage += grade;
+      for(var index = 0; index < grades.Count; index += 1) {
+          result.Add(grades[index]);
       }
-      result.Avarage /= grades.Count;
 
       return result;
     }
